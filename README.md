@@ -1,44 +1,39 @@
 # Calender
 
-![Calendar](https://github.com/davidkayce/calendar/blob/main/calendar.png)
+![Calendar](https://github.com/davidkayce/github-names/blob/main/github-names.png)
 
-This project is built with React, Vite and Vitest. It sorts through events and displays them on a calendar
+This project is built with React, Vite and Vitest. It fetches infromation from github on organisations and their members and shows them
 
 ### Requirements
-- The page shows seven columns, one for each day of the week;
-- It shows events that are provided through an API endpoint;
-- It will have left and right to go to next and prev weeks;
-- On clicking, today should go to the current week;
-- Events may begin at any time, not hourly or half hourly;
-- Multiple events may be scheduled in the same time slot, in which case event blocks would be
-side by side;
+- Retrieve the data from the following endpoint https://api.github.com/organizations?per_page=6&since=4242 …
+- And display them so it looks the same as on the Figma wireframes.
+- For each org there are 3 cases and corresponding UI variations:
+0 public member
+1 public member
+x amount of public members
 
 ## Instructions:
 
-You can open th eindex.html in your browser to see the calendar.
+Run the following command to start the app:
+
+```bash
+npm install
+npm run dev
+
+```
 
 ## Walkthrough and considerations:
 
-The application can be divided in two:
+In the code architecture, I considered arranging the data flow in a way that makes it easier to understand. I made use of the HTML% spec details...summary tag for the accordion. This is to enable full accessibility for the user. I also made use of the react-query libraries to fetch the data from the API.
 
-- Logic to arrange the data and arrange it in an easily presentable manner. 
-  For this, it was important to pay attention to the performance of the functions and the memory use. A modification to the Date object is used to prevent calling multiple instances of the same date for date manipulations. 
+Styling was done using scss as well as it was mor egonomic. I made use of the grid system to make the app look more clean and alllow responsivity
 
-  To cater for showing overlaping events, the events are sorted by start time. I chose to have the events offset to the left (as you would see in google calendar). This allows for the width of each event to also show it's importance in that time period.
-  You can test this by navigating to May 6, 2022 and seeing the events. 
-  
-  Note that clicking on the event title shows you the event's details
-
-  ![Event](https://github.com/davidkayce/calendar/blob/main/events.png)
-
-- Frontend to view the layout:
-  This work was written in a component-based manner to make it easier to manage as well as read
 
 ### Considerations and further work
 
-This a very interesting project. It was a lot of work to get everything to work together, but it was a lot of fun to make it work. That being said, it's not a perfect solution. The frontend is not mobile responsive. 
+This a very interesting project. It was a lot of work to get everything to work together, but it was a lot of fun to make it work. That being said, it's not a perfect solution. 
 
-Further work would be to make it mobile responsive in a meangingful manner. I would have liked to collapse the dates as the screen reduces until one ends up with a single column. A way that comes to mind is to use the HTML5 Resize Observer API on the `calendar-container` element and pass that to the `Date.GetWeekData` function. The the `GetWeekData` function would then return the `weekMap` with as many dates as needed for a certain size. The logic for drawing the calendar would also need to b updatd to build the calendar based on the `weekMap` instead of the static way it is done at the moment. 
+Optimisations/changes would include the following:
 
-What optimisation you would do to make it scalable ie: What you would change in your code so, in the future, it takes as inputs the per_page and since params and display the results accordingly.
-Please note: In this homework we don't ask you to actually implement this. A written explanation of how you would optimise your code is sufficient.
+1. Complete the tests and make sure they pass
+2. To enable the API receive keys for fetching the github organizations. Such as `since` and `per_page`. Thiis cann be done by adding those params to the useQuery key in `App.tsx`. The query would then look something like this: `useQuery(['organizations', since, per_page], () => fetchGithubOrganizations(since, per_page))`. The `since` and `per_page` would be also stored  using useState in the App componenet so that the user can update them.

@@ -1,17 +1,11 @@
-import axios from "axios";
-
-interface Organization {
-  login: string;
-  id: number;
-  node_id: string;
-  avatar_url: string;
-}
+import axios, { Axios } from "axios";
+import { IOrganization, IMember } from "../interfaces";
 
 export class APIRequest {
-  public instance: any;
+  public instance: any 
 
   constructor() {
-    this.instance = axios.create({
+    this.instance =  axios.create({
       baseURL: 'https://api.github.com/',
       timeout: 10000,
       headers: {
@@ -20,20 +14,19 @@ export class APIRequest {
     });
   }
 
-  async getOrganisations(): Promise<Required<Organization>[]> {
-    console.log('here', this.instance)
+  getOrganisations = async (): Promise<Required<IOrganization>[]>  =>{
     try {
-      const response = await axios.get(`organizations?per_page=6&since=4242`);
-      return response;
+      const response = await this.instance.get(`organizations?per_page=6&since=4242`);
+      return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  async getOrganisationMembers(name: string): Promise<any> {
+  getOrganisationMembers =  async (name: string): Promise<any>  => {
     try {
       const response = await this.instance.get(`orgs/${name}/members`);
-      return response;
+      return response.data;
     } catch (error) {
       throw error;
     }

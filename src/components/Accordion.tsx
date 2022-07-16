@@ -1,6 +1,3 @@
-import PropTypes from 'prop-types';
-import './index.scss';
-
 interface AccordionProps {
   className:  string;
   heading: string | JSX.Element;
@@ -12,9 +9,10 @@ const Accordion = ({ className, heading, content }:  AccordionProps) => {
     <details className={`accordion__comp ${className || ''}`}>
       <summary>
         <section>{heading}</section>
-        <button type="button" className="toggler-arrow" > ⌃ </button>
+        <button type="button" className="toggler-arrow first" > ⌄ </button>
       </summary>
       <section className="accordion-content">{content}</section>
+      <button type="button" className="toggler-arrow" > ⌄ </button>
     </details>
   );
 };
